@@ -1,0 +1,226 @@
+---
+title: "Sample Presentation"
+subtitle: "Using xaringan"
+author: "Greg Rousell"
+institute: "Grand Erie District School Board"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: center, middle
+
+```{css echo=FALSE}
+
+.remark-slide-content {
+  font-size: 32px;
+  font-family: 'optima', sans-serif;
+}
+
+h1 {
+  font-family: 'optima', sans-serif;
+  font-size: 30px;
+  background-color: #0089cf;
+  color: white;
+  font-weight: bold;
+  text-align:center;
+  padding: 22px; /* padding will fill in color to edges*/
+}
+
+h2 {
+  font-family: 'optima', sans-serif;
+  background-color: #4cacdd;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px; /* padding will fill in color to edges*/
+}
+
+h3 {
+  font-family: 'optima', sans-serif;
+  background-color: #99cfeb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px; /* padding will fill in color to edges*/
+}
+
+
+.remark-slide-content:after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    right: 1060px;
+    height: 85px;
+    width: 120px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("https://github.com/grousell/GEDSB_Visual_Identity/blob/main/Images/LearnLeadInspire_FullLogo.png?raw=true");
+}
+
+.footnote {
+  text-align: right;
+  position: absolute;
+  bottom: 5px;
+  right: 35px;
+  padding-right: 4em;
+  font-size: 75%;
+}
+
+```
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+
+
+# Sample Presentation
+## Greg Rousell
+Grand Erie District School Board
+
+???
+
+This is the title page
+
+---
+class: left, top
+
+# RMarkdown
+###  Using the xaringan package for presentations
+
+- Using custom CSS I have created my own theme
+- Xarnigan format allows for:
+    - Presenter Mode `<p>`
+    - Mirroring to a second screen `<c>`
+    - Full Screen `<f>`
+
+???
+
+This slide shows how to create bullets
+
+---
+class: left, top
+# Footnotes
+
+Below are some footnotes.
+
+
+.footnote[
+[1] [Link to RMarkdown Book](https://bookdown.org/yihui/rmarkdown/)  
+[2] Here are some additional notes for reference
+]
+
+???
+
+Here are my presenter notes. 
+
+---
+
+# Multi Columns
+
+
+.pull-left[
+1. Point One;
+1. Point Two;
+1. Point Three;
+1. Point Four;
+]
+
+.pull-right[
+1. Point Five;
+1. Point Six;
+1. Point Seven;
+]
+
+???
+
+This slide shows text and bullets side by side
+
+---
+
+# Multi Columns
+
+<div style="text-align:center">
+
+.pull-left[
+```{r plot1, echo=FALSE, fig.width=5, fig.height=5}
+
+hist (mtcars$mpg)
+```
+]
+
+.pull-right[
+```{r plot2, echo=FALSE, fig.width=5, fig.height=5}
+plot (mtcars$mpg, mtcars$wt)
+```
+
+]
+
+</div>
+---
+
+# Multi Columns
+
+.pull-left[
+The chart on the right shows the distribution of the qsec variable from the mtcars dataset. 
+]
+
+.pull-right[
+```{r plot3, echo = FALSE, fig.width=5, fig.height=5}
+hist (mtcars$qsec)
+```
+]
+
+---
+
+# Tables
+
+If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
+
+```{r table, echo=FALSE}
+knitr::kable(head(iris, 5), format = 'html')
+```
+
+---
+
+# HTML Widgets
+```{r out.width='100%', echo = FALSE, fig.height=5, eval=require('leaflet')}
+library(leaflet)
+leaflet() |>  
+  addTiles() |>
+  setView(
+  -79.8474901, 43.2394298,
+  zoom = 13
+  )
+```
+
+---
+
+# Data Table 
+```{r eval=require('DT'), tidy=FALSE, echo=FALSE}
+DT::datatable(
+  head(iris, 5),
+  fillContainer = FALSE, options = list(pageLength = 5)) |> 
+  DT::formatStyle(columns = colnames(iris), fontSize = '75%')
+```
+
+---
+
+# Video
+
+<div style="text-align:center">
+
+<iframe width="850" height="450" src="https://www.youtube.com/embed/9bf6rsAKu9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</div>
+
+
+
