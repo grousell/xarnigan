@@ -78,6 +78,8 @@ h3 {
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+library(tidyverse)
+library(plotly)
 ```
 
 
@@ -151,15 +153,45 @@ This slide shows text and bullets side by side
 <div style="text-align:center">
 
 .pull-left[
-```{r plot1, echo=FALSE, fig.width=5, fig.height=5}
+```{r plot1, echo=FALSE, fig.width=5, fig.height=5, fig.retina=2}
 
-hist (mtcars$mpg)
+ggplotly(
+  mtcars |>
+    group_by (cyl) |>
+    summarise (MPG = mean (mpg, na.rm = TRUE)) |>
+    mutate (cyl = glue::glue ("{cyl} Cylinders")) |>
+    ggplot (aes (x = cyl, y = MPG)) +
+    geom_col(fill = "#0089cf") +
+    theme_minimal() +
+    geom_text (aes (label = round (MPG, 1)),
+               vjust = -1) +
+    scale_y_continuous(limits = c(0, max (mtcars$mpg) * 1.1)) +
+    labs (title = "Miles per Gallon by Cylinder",
+          x = NULL,
+          y = "Average Miles per Gallon")
+)
 ```
 ]
 
 .pull-right[
 ```{r plot2, echo=FALSE, fig.width=5, fig.height=5}
-plot (mtcars$mpg, mtcars$wt)
+
+ggplotly(
+  mtcars |>
+    mutate (cyl = glue::glue ("{cyl} Cylinders")) |>
+    ggplot (aes(
+      x = mpg, y = wt, color = cyl
+    )) +
+     geom_point(data= ~select (., mpg, wt), color = "grey75") + 
+    geom_point() +
+    scale_x_continuous(limits = c(0, max (mtcars$mpg) * 1.1)) +
+    scale_y_continuous(limits = c (0, max (mtcars$wt * 1.1))) +
+    theme_minimal() 
+) |> 
+  layout(legend = list(
+      orientation = "h"
+    ))
+
 ```
 
 ]
@@ -207,7 +239,7 @@ leaflet() |>
 # Data Table 
 ```{r eval=require('DT'), tidy=FALSE, echo=FALSE}
 DT::datatable(
-  head(iris, 5),
+  head(iris, 10),
   fillContainer = FALSE, options = list(pageLength = 5)) |> 
   DT::formatStyle(columns = colnames(iris), fontSize = '75%')
 ```
